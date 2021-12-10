@@ -90,7 +90,7 @@ export class CdkAygoFinalStack extends cdk.Stack {
 	'yum update -y',
 	'yum install docker -y',
 	'service docker start',
-	'sudo docker run -d -p 5432:5432 --name pg postgres:9.6 -e POSTGRES_USER=aygo_user -e POSTGRES_PASSWORD=aygo_password -e POSTGRES_DB=aygo -e PGDATA=/tmp'
+	'sudo docker run -d -p 5432:5432 -e POSTGRES_USER=aygo_user -e POSTGRES_PASSWORD=aygo_password -e POSTGRES_DB=aygo -e PGDATA=/tmp --name pg postgres:9.6 '
 	)
 	
 	  // Create the EC2 instance using the Security Group, AMI, and KeyPair defined.
@@ -117,7 +117,7 @@ export class CdkAygoFinalStack extends cdk.Stack {
 	'yum update -y',
 	'yum install docker -y',
 	'service docker start',
-	'sudo docker run -d -p 80:8080 --name back 9410ger/projectaygogroup2:9.6 -e DB_HOST=' + ec2Instance.instancePublicIp + ' -e DB_PORT=5432 -e DB_USER=aygo_user -e DB_PASS=aygo_password -e DB_NAME=aygo'
+	'sudo docker run -d -p 80:8080 -e DB_HOST=' + ec2Instance.instancePublicIp + ' -e DB_PORT=5432 -e DB_USER=aygo_user -e DB_PASS=aygo_password -e DB_NAME=aygo --name back 9410ger/projectaygogroup2 '
 	)
 	
 	// Create the EC2 instance 2 using the Security Group, AMI, and KeyPair 2 defined. userDataApp_backend
@@ -144,7 +144,7 @@ export class CdkAygoFinalStack extends cdk.Stack {
     'yum update -y',
     'yum install docker -y',
     'service docker start',
-    'sudo docker run -d -p 27017:27017 --name mongodbta dftorresr/taller1_vir_prog_dist'
+    'sudo docker run -d -p 80:3000 -e REACT_APP_HOST_IP_ADDRESS=http://' + ec2Instance_2.instancePublicIp + ' --name front legyorozun/front:latest'
     //'sudo docker run -d -p 80:8080 --name back 9410ger/projectaygogroup2:9.6 -e DB_HOST=' + ec2Instance_2.instancePublicIp + ' -e DB_PORT=5432 -e DB_USER=aygo_user -e DB_PASS=aygo_password -e DB_NAME=aygo'
     )
 
